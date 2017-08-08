@@ -1,5 +1,7 @@
 package com.jaycee88.propertyanimationdemo;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * MyAnimView
+ * ValueAnimator、ObjectAnimator的高级用法
  * Created by jaycee on 2017/8/8.
  */
 public class MyAnimView extends View {
@@ -21,10 +23,18 @@ public class MyAnimView extends View {
 
     private Paint mPaint;
 
+    private String color;
+
     public MyAnimView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.BLUE);
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+        mPaint.setColor(Color.parseColor(color));
+        invalidate();
     }
 
     @Override
@@ -57,7 +67,11 @@ public class MyAnimView extends View {
                 invalidate();
             }
         });
-        anim.setDuration(5000);
-        anim.start();
+        ObjectAnimator anim2 = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
+                "#0000FF", "#FF0000");
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(anim).with(anim2);
+        animSet.setDuration(5000);
+        animSet.start();
     }
 }
