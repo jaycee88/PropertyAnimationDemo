@@ -25,9 +25,24 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startAnimatorFromXML();
+                MyAnimViewActivity.startActivity(MainActivity.this);
             }
         });
+    }
+
+    private void startCustomValueAnimator() {
+        Point point1 = new Point(0, 0);
+        Point point2 = new Point(300, 300);
+        ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), point1, point2);
+        anim.setDuration(5000);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Point point = (Point) animation.getAnimatedValue();
+                Log.d("TAG", "current x is " + point.getX() + "; current y is " + point.getY());
+            }
+        });
+        anim.start();
     }
 
     private void startAnimatorFromXML() {
