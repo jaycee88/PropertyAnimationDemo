@@ -57,8 +57,10 @@ public class MyAnimView extends View {
     }
 
     private void startAnimation() {
-        Point startPoint = new Point(RADIUS, RADIUS);
-        Point endPoint = new Point(getWidth() - RADIUS, getHeight() - RADIUS);
+//        Point startPoint = new Point(RADIUS, RADIUS);
+//        Point endPoint = new Point(getWidth() - RADIUS, getHeight() - RADIUS);
+        Point startPoint = new Point(getWidth() / 2, RADIUS);
+        Point endPoint = new Point(getWidth() / 2, getHeight() - RADIUS);
         ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -70,6 +72,10 @@ public class MyAnimView extends View {
         ObjectAnimator anim2 = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
                 "#0000FF", "#FF0000");
         AnimatorSet animSet = new AnimatorSet();
+        // 默认是AccelerateDecelerateInterpolator
+//        animSet.setInterpolator(new AccelerateInterpolator(2f)); // 加速
+//        animSet.setInterpolator(new BounceInterpolator());// 弹性
+        animSet.setInterpolator(new DecelerateAccelerateInterpolator());// 自定义
         animSet.play(anim).with(anim2);
         animSet.setDuration(5000);
         animSet.start();

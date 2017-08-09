@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,9 +26,17 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyAnimViewActivity.startActivity(MainActivity.this);
+//                MyAnimViewActivity.startActivity(MainActivity.this);
+                startViewPropertyAnimator();
             }
         });
+    }
+
+    private void startViewPropertyAnimator() {
+//        mTextView.animate().alpha(0f).setDuration(2000);
+//        mTextView.animate().x(800).y(500).setDuration(3000); // 移动到坐标800, 500
+        mTextView.animate().x(800).y(500).setDuration(3000)
+                .setInterpolator(new BounceInterpolator()); // 移动到坐标800, 500
     }
 
     private void startCustomValueAnimator() {
